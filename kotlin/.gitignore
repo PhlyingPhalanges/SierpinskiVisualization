@@ -1,0 +1,27 @@
+# Gradle build files
+.gradle/
+build/
+
+# Gradle Wrapper files
+gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.iws
+out/
+
+# Kotlin compiled files
+*.class
+*.kotlin_module
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# JavaFX specific (if any)
+*.jfx
+
