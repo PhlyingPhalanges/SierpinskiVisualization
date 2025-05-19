@@ -1,0 +1,27 @@
+# Gradle build and cache folders
+/build/
+/.gradle/
+
+# Gradle Wrapper jar files should be committed, so DO NOT ignore:
+/gradle/wrapper/gradle-wrapper.jar
+/gradle/wrapper/gradle-wrapper.properties
+
+# IntelliJ IDEA project files
+/.idea/
+/*.iml
+/*.iws
+/*.ipr
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Kotlin metadata (optional)
+/*.kotlin_metadata
+
+# Kotlin Native binaries (optional)
+/out/
+
