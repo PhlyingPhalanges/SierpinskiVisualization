@@ -1,0 +1,32 @@
+# Gradle build outputs
+/build/
+/.gradle/
+
+# IntelliJ IDEA project files
+/.idea/
+/*.iml
+/*.iws
+/*.ipr
+
+# User-specific files (workspace settings, caches)
+/.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/caches
+.idea/jsLibraryMappings.xml
+
+# IntelliJ run configurations (optional to ignore or track)
+/.idea/runConfigurations/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Kotlin metadata (optional)
+*.kotlin_metadata
+
+# Kotlin Native binaries (optional)
+/out/
