@@ -1,0 +1,19 @@
+# Kotlin Gradle build artifacts inside kotlin/
+kotlin/.gradle/
+kotlin/build/
+
+# IntelliJ IDEA files anywhere in the repo
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Python cache (if relevant)
+__pycache__/
+*.py[cod]
+
