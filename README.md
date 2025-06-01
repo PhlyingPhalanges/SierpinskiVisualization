@@ -8,7 +8,7 @@ This repository contains two implementations for visualizing Sierpiński fractal
 - **kotlin_rewrite/**  
   A Kotlin/Gradle rewrite of the visualizer with a Compose-based desktop UI, created as a side project for further exploration of Sierpiński Carpets and Gaskets.
 
-For detailed explanations, mathematical background, and the inspiration behind the project, please refer to the [research paper PDF](./SierpinskiVisualization_ResearchPaper.pdf).
+For detailed explanations, mathematical background, and the inspiration behind the project, please refer to the [research paper PDF](./Sierpinski_Gaskets_and_Carpets.pdf).
 
 ---
 
