@@ -1,4 +1,4 @@
-# SierpinskiVisualization
+# Sierpiński Visualization
 
 This repository contains two implementations for visualizing Sierpiński fractals (Carpets and Gaskets):
 
