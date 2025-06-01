@@ -56,11 +56,7 @@ fun App() {
             )
             RunVisualizer(
                 onClick = {
-                    points = when (selectedFractal) {
-                        "Carpet" -> generateCarpet(numIterations)
-                        "Gasket" -> generateGasket(numIterations)
-                        else -> emptyList()
-                    }
+                    points = generateFractal(selectedFractal, numIterations)
                 }
             )
         }

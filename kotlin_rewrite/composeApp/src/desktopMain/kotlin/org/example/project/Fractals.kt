@@ -42,6 +42,17 @@ val startingTriangle = listOf(
 )
 
 /**
+ * General fractal generation method, determines which point set to generate
+ */
+fun generateFractal(selectedFractal: String, numIterations: Int): List<Point> {
+    return when (selectedFractal) {
+        "Carpet" -> generateCarpet(numIterations)
+        "Gasket" -> generateGasket(numIterations)
+        else -> emptyList()
+    }
+}
+
+/**
  * Generator function for the Sierpiński Carpet
  */
 fun generateCarpet(numIterations: Int): List<Point> {
