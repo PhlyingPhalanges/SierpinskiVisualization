@@ -7,8 +7,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PointMode
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -16,14 +19,30 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
     var selectedFractal by remember { mutableStateOf("Carpet") }
     var numIterations by remember { mutableStateOf(1) }
-    var shouldShowCanvas by remember { mutableStateOf(false) }
+    var points by remember { mutableStateOf<List<Point>>(emptyList()) }
 
-    Box (
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
+    // dynamically determine valid iteration options based on selected fractal
+    // (based on tested performance)
+    val iterationOptions = if (selectedFractal == "Carpet") {
+        (1..5).toList()
+    } else {
+        (1..10).toList()
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalAlignment = Alignment.Top
     ) {
+        // left side: controls
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier
+                .width(250.dp)
+                .fillMaxHeight()
+                .padding(top = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Header()
             FractalSelectionButtonRow(
@@ -32,18 +51,28 @@ fun App() {
             )
             IterationSelector(
                 numIterations = numIterations,
-                onNumberSelected = { numIterations = it }
+                onNumberSelected = { numIterations = it },
+                options = iterationOptions
             )
-            RunVisualizerButton(
-                onClick = { shouldShowCanvas = true }
+            RunVisualizer(
+                onClick = {
+                    points = when (selectedFractal) {
+                        "Carpet" -> generateCarpet(numIterations)
+                        "Gasket" -> generateGasket(numIterations)
+                        else -> emptyList()
+                    }
+                }
             )
+        }
 
-            if (shouldShowCanvas) {
-                FractalCanvas(
-                    selectedFractal = selectedFractal,
-                    numIterations = numIterations
-                )
-            }
+        // right size: canvas
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 16.dp),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            FractalCanvas(points = points)
         }
     }
 }
@@ -93,7 +122,7 @@ fun GasketButton(isSelected: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-fun IterationSelector(numIterations: Int, onNumberSelected: (Int) -> Unit) {
+fun IterationSelector(numIterations: Int, onNumberSelected: (Int) -> Unit, options: List<Int>) {
     var expanded by remember {mutableStateOf(false) }
 
     Box {
@@ -105,7 +134,7 @@ fun IterationSelector(numIterations: Int, onNumberSelected: (Int) -> Unit) {
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            (1..8).forEach { number ->
+            options.forEach { number ->
                 DropdownMenuItem(
                     onClick = {
                         onNumberSelected(number)
@@ -120,19 +149,37 @@ fun IterationSelector(numIterations: Int, onNumberSelected: (Int) -> Unit) {
 }
 
 @Composable
-fun RunVisualizerButton(onClick: () -> Unit) {
+fun RunVisualizer(onClick: () -> Unit) {
     Button(onClick = onClick) {
         Text("Run Visualizer")
     }
 }
 
 @Composable
-fun FractalCanvas(selectedFractal: String, numIterations: Int) {
-    Canvas(modifier = Modifier
-        .fillMaxWidth()
-        .height(400.dp)
-        .background(Color.Black)
+fun FractalCanvas(points: List<Point>) {
+    BoxWithConstraints(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-        // DRAW FRACTAL HERE
+        val squareSize = min(maxWidth, maxHeight)
+
+        Canvas(
+            modifier = Modifier.size(squareSize).background(Color.Black)
+        ) {
+
+            val scale = size.minDimension
+            // map points to Offsets scaled to canvas size
+            val offsets = points.map { point ->
+                Offset(x = (point.x * scale).toFloat(), y = (point.y * scale).toFloat())
+            }
+
+            drawPoints(
+                points = offsets,
+                pointMode = PointMode.Points,
+                color = Color.White,
+                strokeWidth = 1f
+            )
+        }
     }
+
 }
