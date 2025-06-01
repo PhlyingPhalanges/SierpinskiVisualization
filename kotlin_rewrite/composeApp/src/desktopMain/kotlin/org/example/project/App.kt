@@ -1,5 +1,7 @@
 package org.example.project
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -14,26 +16,35 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
     var selectedFractal by remember { mutableStateOf("Carpet") }
     var numIterations by remember { mutableStateOf(1) }
+    var shouldShowCanvas by remember { mutableStateOf(false) }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+    Box (
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopCenter
     ) {
-        Header()
-        ButtonRow(
-            selectedFractal = selectedFractal,
-            onFractalSelected = { selectedFractal = it }
-        )
-        IterationSelector(
-            numIterations = numIterations,
-            onNumberSelected = { numIterations = it }
-        )
-        RunVisualizerButton(
-            selectedFractal = selectedFractal,
-            numIterations = numIterations,
-            onRun = {
-                // DO WORK
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Header()
+            FractalSelectionButtonRow(
+                selectedFractal = selectedFractal,
+                onFractalSelected = { selectedFractal = it }
+            )
+            IterationSelector(
+                numIterations = numIterations,
+                onNumberSelected = { numIterations = it }
+            )
+            RunVisualizerButton(
+                onClick = { shouldShowCanvas = true }
+            )
+
+            if (shouldShowCanvas) {
+                FractalCanvas(
+                    selectedFractal = selectedFractal,
+                    numIterations = numIterations
+                )
             }
-        )
+        }
     }
 }
 
@@ -43,7 +54,7 @@ fun Header() {
 }
 
 @Composable
-fun ButtonRow(selectedFractal: String?, onFractalSelected: (String) -> Unit) {
+fun FractalSelectionButtonRow(selectedFractal: String?, onFractalSelected: (String) -> Unit) {
     Row {
         CarpetButton(
             isSelected = selectedFractal == "Carpet",
@@ -109,12 +120,19 @@ fun IterationSelector(numIterations: Int, onNumberSelected: (Int) -> Unit) {
 }
 
 @Composable
-fun RunVisualizerButton(selectedFractal: String, numIterations: Int, onRun: () -> Unit) {
-    Button(
-        onClick = {
-            onRun()
-        }
-    ) {
+fun RunVisualizerButton(onClick: () -> Unit) {
+    Button(onClick = onClick) {
         Text("Run Visualizer")
+    }
+}
+
+@Composable
+fun FractalCanvas(selectedFractal: String, numIterations: Int) {
+    Canvas(modifier = Modifier
+        .fillMaxWidth()
+        .height(400.dp)
+        .background(Color.Black)
+    ) {
+        // DRAW FRACTAL HERE
     }
 }
