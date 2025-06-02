@@ -14,6 +14,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+/**
+ * The main composable function for the Sierpinski visualization app.
+ *
+ * Manages the overall UI state including selecting fractal type, number of
+ * iterations, and the set of points to be rendered.
+ *
+ * Handles user interaction via selection controls and triggers fractal generation.
+ */
 @Composable
 @Preview
 fun App() {
@@ -117,6 +125,13 @@ fun GasketButton(isSelected: Boolean, onClick: () -> Unit) {
     }
 }
 
+/**
+ * A dropdown selector composable for choosing the number of iterations.
+ *
+ * @param numIterations The currently selected number of iterations.
+ * @param onNumberSelected Callback invoked when a new iteration number is selected.
+ * @param options A list of valid iteration numbers to display in the dropdown.
+ */
 @Composable
 fun IterationSelector(numIterations: Int, onNumberSelected: (Int) -> Unit, options: List<Int>) {
     var expanded by remember {mutableStateOf(false) }
@@ -144,6 +159,11 @@ fun IterationSelector(numIterations: Int, onNumberSelected: (Int) -> Unit, optio
     }
 }
 
+/**
+ * Button to trigger fractal generation and visualization.
+ *
+ * @param onClick Callback when the button is pressed.
+ */
 @Composable
 fun RunVisualizer(onClick: () -> Unit) {
     Button(onClick = onClick) {
@@ -151,6 +171,12 @@ fun RunVisualizer(onClick: () -> Unit) {
     }
 }
 
+/**
+ * A canvas composable that renders the fractal points
+ *
+ * @param points A list of points to be drawn to the canvas. Each point
+ * is expected to be normalized between 0 and 1
+ */
 @Composable
 fun FractalCanvas(points: List<Point>) {
     BoxWithConstraints(

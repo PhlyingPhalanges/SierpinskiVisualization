@@ -2,7 +2,9 @@ package org.example.project
 
 import kotlin.math.sqrt
 
-// data class representing 2D point
+/**
+ * Represents a 2D point with x and y coordinates
+ */
 data class Point(val x: Double, val y: Double)
 
 // Sierpiński Carpet IFS (Iterated Function System)
@@ -42,7 +44,12 @@ val startingTriangle = listOf(
 )
 
 /**
- * General fractal generation method, determines which point set to generate
+ * Generates the list of points representing the selected fractal at the specified
+ * number of iterations.
+ *
+ * @param selectedFractal Name of the fractal to generate ("Carpet" or "Gasket").
+ * @param numIterations Number of iterations/depth of fractal generation.
+ * @return List of points after fractal generation.
  */
 fun generateFractal(selectedFractal: String, numIterations: Int): List<Point> {
     return when (selectedFractal) {
@@ -53,7 +60,11 @@ fun generateFractal(selectedFractal: String, numIterations: Int): List<Point> {
 }
 
 /**
- * Generator function for the Sierpiński Carpet
+ * Generates the Sierpiński Carpet fractal points by iteratively applying the Carpet
+ * IFS transformations.
+ *
+ * @param numIterations Number of iterations to apply.
+ * @return List of points representing the Carpet fractal at the given iteration.
  */
 fun generateCarpet(numIterations: Int): List<Point> {
     var points = startingSquare
@@ -72,7 +83,11 @@ fun generateCarpet(numIterations: Int): List<Point> {
 }
 
 /**
- * Generator function for the Sierpiński Gasket
+ * Generates the Sierpiński Gasket fractal points by iteratively applying the Gasket
+ * IFS transformations.
+ *
+ * @param numIterations Number of iterations to apply.
+ * @return List of points representing the Gasket fractal at the given iteration.
  */
 fun generateGasket(numIterations: Int): List<Point> {
     var points = startingTriangle
